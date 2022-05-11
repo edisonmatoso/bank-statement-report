@@ -1,20 +1,11 @@
-import { useEffect, useState } from 'react'
-import { getTransactions } from '../../../../services'
 import { DayTransactions as DayTransactionsType } from '../../../../services/types'
 import { DayTransactions } from './components'
 
-export const TransactionList = () => {
-  const [transactions, setTransactions] = useState<DayTransactionsType[]>()
+type TransactionListProps = {
+  transactions: DayTransactionsType[] | undefined
+}
 
-  const handleFetchTransactions = async () => {
-    const { results } = await getTransactions()
-    setTransactions(results)
-  }
-
-  useEffect(() => {
-    handleFetchTransactions()
-  }, [])
-
+export const TransactionList = ({ transactions }: TransactionListProps) => {
   return (
     <div>
       {transactions?.map((dateTransaction) => (

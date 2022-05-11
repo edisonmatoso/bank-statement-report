@@ -11,7 +11,7 @@ export const DayTransactions = ({ dayTransactions }: DayTransactionsProps) => {
       <p>{`${dayTransactions.date} - ${dayTransactions.amountTotal}`}</p>
       {dayTransactions.items.map((transaction) => (
         <Transaction
-          key={`${transaction.actor}${transaction.amount}`}
+          key={`${transaction.actor}${transaction.dateEvent}`}
           transaction={transaction}
         />
       ))}
