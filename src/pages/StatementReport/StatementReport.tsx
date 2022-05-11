@@ -26,13 +26,29 @@ export const StatementReport = () => {
     (key) => checkbox[key as CheckboxEnum]
   ) as CheckboxEnum[]
 
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const name = event.currentTarget.name
+  const handleCheckboxChange = ({
+    currentTarget: { name, checked }
+  }: ChangeEvent<HTMLInputElement>) => {
+    const currentCheckboxValue = { ...checkbox, [name]: checked }
+    const { entrada, futuro, saida } = currentCheckboxValue
 
-    setCheckbox({
-      ...checkbox,
-      [name]: event.currentTarget.checked
-    })
+    const isAllChecked = entrada && futuro && saida
+    const tudoIsSelected = name === CheckboxEnum.Tudo && checked
+
+    if (tudoIsSelected || isAllChecked) {
+      const newCheckboxValue = {
+        [CheckboxEnum.Tudo]: true,
+        [CheckboxEnum.Entrada]: false,
+        [CheckboxEnum.Futuro]: false,
+        [CheckboxEnum.Saida]: false
+      }
+      setCheckbox(newCheckboxValue)
+    } else {
+      setCheckbox({
+        ...currentCheckboxValue,
+        [CheckboxEnum.Tudo]: false
+      })
+    }
   }
 
   const handleFetchTransactions = async () => {
