@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { getTransactions } from '../../services'
-import { DayTransactions } from '../../services/types'
+import { DayTransactions, Entry } from '../../services/types'
 import {
   Checkbox as CheckboxEnum,
   Filters,
@@ -25,6 +25,40 @@ export const StatementReport = () => {
   const currentFilter = Object.keys(checkbox).filter(
     (key) => checkbox[key as CheckboxEnum]
   ) as CheckboxEnum[]
+
+  const handleEntry = (entry: Entry, filter: CheckboxEnum) => {
+    const entryDictionary = {
+      [CheckboxEnum.Tudo]: true,
+      [CheckboxEnum.Entrada]: entry === Entry.Credit,
+      [CheckboxEnum.Saida]: entry === Entry.Debit,
+      [CheckboxEnum.Futuro]: false
+    }
+
+    return entryDictionary[filter]
+  }
+
+  const handleTransactionEntryFilter = () => {
+    const isFuturoActivated = currentFilter.some(
+      (filter) => filter === CheckboxEnum.Futuro
+    )
+    const isTudoActivated = currentFilter.some(
+      (filter) => filter === CheckboxEnum.Tudo
+    )
+
+    if (isTudoActivated) {
+      return transactions
+    }
+
+    const filteredSubTransactions = transactions?.map((transaction) => ({
+      ...transaction,
+      items: transaction.items.filter(({ entry, scheduled }) =>
+        isFuturoActivated && scheduled
+          ? true
+          : currentFilter.some((filter) => handleEntry(entry, filter))
+      )
+    }))
+    return filteredSubTransactions?.filter(({ items }) => items.length)
+  }
 
   const handleCheckboxChange = ({
     currentTarget: { name, checked }
@@ -60,13 +94,15 @@ export const StatementReport = () => {
     handleFetchTransactions()
   }, [])
 
+  const filteredTransactions = handleTransactionEntryFilter()
+
   return (
     <div>
       <Filters
         checkbox={checkbox}
         handleCheckboxChange={handleCheckboxChange}
       />
-      <TransactionList transactions={transactions} />
+      <TransactionList transactions={filteredTransactions} />
     </div>
   )
 }
