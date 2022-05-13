@@ -16,7 +16,7 @@ beforeEach(() => {
 })
 
 describe('StatementReport', () => {
-  describe('filters', () => {
+  describe('checkboxes filter', () => {
     it('should unselect another checkboxes when select `Tudo`', () => {
       render(<StatementReport />)
 
@@ -49,40 +49,56 @@ describe('StatementReport', () => {
       expect(futuroCheckbox.checked).toBe(false)
     })
   })
-  describe('list', () => {
-    it('should render just `CREDIT` entry when only `Entrada` is selected', async () => {
-      render(<StatementReport />)
+  describe('list filtering', () => {
+    describe('checkboxes', () => {
+      it('should render just `CREDIT` entry when only `Entrada` is selected', async () => {
+        render(<StatementReport />)
 
-      fireEvent.click(screen.getByLabelText<HTMLInputElement>(/entrada/i))
+        fireEvent.click(screen.getByLabelText<HTMLInputElement>(/entrada/i))
 
-      expect(await screen.findByText(/entry credit/i)).toBeInTheDocument()
-      await waitFor(() => {
-        expect(screen.queryByText(/entry debit/i)).not.toBeInTheDocument()
+        expect(await screen.findByText(/entry credit/i)).toBeInTheDocument()
+        await waitFor(() => {
+          expect(screen.queryByText(/entry debit/i)).not.toBeInTheDocument()
+        })
+      })
+      it('should render just `DEBIT` entry when only `Saída` is selected', async () => {
+        render(<StatementReport />)
+
+        fireEvent.click(screen.getByLabelText<HTMLInputElement>(/saída/i))
+
+        expect(await screen.findByText(/entry debit/i)).toBeInTheDocument()
+        await waitFor(() => {
+          expect(screen.queryByText(/entry credit/i)).not.toBeInTheDocument()
+        })
+      })
+      it('should render scheduled transaction entry when `Futuro` is selected', async () => {
+        render(<StatementReport />)
+
+        fireEvent.click(screen.getByLabelText<HTMLInputElement>(/futuro/i))
+
+        expect(await screen.findByText(/scheduled/i)).toBeInTheDocument()
+      })
+      it('should render all transactions when `Tudo` is selected', async () => {
+        render(<StatementReport />)
+
+        expect(await screen.findByText(/scheduled/i)).toBeInTheDocument()
+        expect(await screen.findByText(/entry debit/i)).toBeInTheDocument()
+        expect(await screen.findByText(/entry credit/i)).toBeInTheDocument()
       })
     })
-    it('should render just `DEBIT` entry when only `Saída` is selected', async () => {
-      render(<StatementReport />)
+    describe('input', () => {
+      it('should filter by actor name', async () => {
+        render(<StatementReport />)
 
-      fireEvent.click(screen.getByLabelText<HTMLInputElement>(/saída/i))
+        const input = screen.getByPlaceholderText(/pesquisar/i)
 
-      expect(await screen.findByText(/entry debit/i)).toBeInTheDocument()
-      await waitFor(() => {
-        expect(screen.queryByText(/entry credit/i)).not.toBeInTheDocument()
+        fireEvent.change(input, { target: { value: 'scheduled' } })
+
+        expect(await screen.findByText(/scheduled/i)).toBeInTheDocument()
+        await waitFor(() => {
+          expect(screen.queryByText(/entry credit/i)).not.toBeInTheDocument()
+        })
       })
-    })
-    it('should render scheduled transaction entry when `Futuro` is selected', async () => {
-      render(<StatementReport />)
-
-      fireEvent.click(screen.getByLabelText<HTMLInputElement>(/futuro/i))
-
-      expect(await screen.findByText(/scheduled/i)).toBeInTheDocument()
-    })
-    it('should render all transactions when `Tudo` is selected', async () => {
-      render(<StatementReport />)
-
-      expect(await screen.findByText(/scheduled/i)).toBeInTheDocument()
-      expect(await screen.findByText(/entry debit/i)).toBeInTheDocument()
-      expect(await screen.findByText(/entry credit/i)).toBeInTheDocument()
     })
   })
 })

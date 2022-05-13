@@ -21,6 +21,7 @@ export const StatementReport = () => {
 
   const [transactions, setTransactions] = useState<DayTransactions[]>()
   const [checkbox, setCheckbox] = useState<Checkbox>(initialCheckbox)
+  const [input, setInput] = useState<string>()
 
   const currentFilter = Object.keys(checkbox).filter(
     (key) => checkbox[key as CheckboxEnum]
@@ -37,7 +38,7 @@ export const StatementReport = () => {
     return entryDictionary[filter]
   }
 
-  const handleTransactionEntryFilter = () => {
+  const handleTransactionEntryFilter = (transactions: DayTransactions[]) => {
     const isFuturoActivated = currentFilter.some(
       (filter) => filter === CheckboxEnum.Futuro
     )
@@ -49,7 +50,7 @@ export const StatementReport = () => {
       return transactions
     }
 
-    const filteredSubTransactions = transactions?.map((transaction) => ({
+    const filteredSubTransactions = transactions.map((transaction) => ({
       ...transaction,
       items: transaction.items.filter(({ entry, scheduled }) =>
         isFuturoActivated && scheduled
@@ -57,8 +58,18 @@ export const StatementReport = () => {
           : currentFilter.some((filter) => handleEntry(entry, filter))
       )
     }))
-    return filteredSubTransactions?.filter(({ items }) => items.length)
+    return filteredSubTransactions.filter(({ items }) => items.length)
   }
+
+  const handleInputFilter = (transactions: DayTransactions[]) =>
+    transactions
+      .map((transaction) => ({
+        ...transaction,
+        items: transaction.items.filter(
+          ({ actor }) => input && actor.toLowerCase().includes(input)
+        )
+      }))
+      .filter(({ items }) => items.length)
 
   const handleCheckboxChange = ({
     currentTarget: { name, checked }
@@ -85,22 +96,33 @@ export const StatementReport = () => {
     }
   }
 
+  const handleFilters = () => {
+    if (transactions) {
+      const filteredByCheckbox = handleTransactionEntryFilter(transactions)
+
+      return input?.length
+        ? handleInputFilter(filteredByCheckbox)
+        : filteredByCheckbox
+    }
+  }
+
   const handleFetchTransactions = async () => {
     const { results } = await getTransactions()
     setTransactions(results)
   }
+  const filteredTransactions = handleFilters()
 
   useEffect(() => {
     handleFetchTransactions()
   }, [])
-
-  const filteredTransactions = handleTransactionEntryFilter()
 
   return (
     <div>
       <Filters
         checkbox={checkbox}
         handleCheckboxChange={handleCheckboxChange}
+        input={input}
+        handleInputChange={({ currentTarget: { value } }) => setInput(value)}
       />
       <TransactionList transactions={filteredTransactions} />
     </div>
