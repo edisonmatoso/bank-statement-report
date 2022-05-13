@@ -10,12 +10,28 @@ export type DayTransactions = {
 }
 
 export type Transaction = {
-  status: 'COMPLETED' | 'REFUNDED' | 'PENDING'
+  status: Status
   actor: string
   amount: number
-  source: 'PAYMENT' | 'TRANSFER'
+  source: Source
   type: 'BANKSLIP' | 'EXTERNAL' | 'INTERNAL'
-  entry: 'CREDIT' | 'DEBIT'
+  entry: Entry
   dateEvent: string
   scheduled: boolean
+}
+
+export enum Status {
+  Completed = 'COMPLETED',
+  Refunded = 'REFUNDED',
+  Pending = 'PENDING'
+}
+
+export enum Source {
+  Payment = 'PAYMENT',
+  Transfer = 'TRANSFER'
+}
+
+export enum Entry {
+  Debit = 'DEBIT',
+  Credit = 'CREDIT'
 }
