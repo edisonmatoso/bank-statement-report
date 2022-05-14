@@ -10,7 +10,7 @@ export const DayTransactions = ({
   dayTransactions: { date, amountTotal, items }
 }: DayTransactionsProps) => {
   return (
-    <Container key={date}>
+    <Container>
       <Date>{date}</Date>
       <p>{amountTotal}</p>
       {items.map((transaction) => (
