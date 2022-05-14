@@ -1,3 +1,4 @@
 export * from './Filters'
 export * from './TransactionList'
-export * from './Input'
+export * from './SearchInput'
+export * from './Checkbox'

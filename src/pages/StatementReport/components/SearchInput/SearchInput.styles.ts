@@ -1,16 +1,15 @@
 import styled from '@emotion/styled'
 
-export const InputContainer = styled.div`
+export const SearchInputContainer = styled.div`
   display: flex;
   align-items: center;
   height: 35px;
-  width: 500px;
   background-color: ${({ theme }) => theme.color.grays[4]};
   border-radius: ${({ theme }) => theme.radius[1]};
   padding: 10px;
 `
 
-export const Input = styled.input`
+export const SearchInput = styled.input`
   border: none;
   background: none;
   width: 100%;

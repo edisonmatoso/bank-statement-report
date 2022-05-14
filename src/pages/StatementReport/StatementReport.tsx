@@ -1,22 +1,18 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { getTransactions } from '../../services'
 import { DayTransactions, Entry } from '../../services/types'
-import {
-  Checkbox as CheckboxEnum,
-  Filters,
-  TransactionList
-} from './components'
+import { CheckboxName, Filters, TransactionList } from './components'
 
 export type Checkbox = {
-  [key in CheckboxEnum]: boolean
+  [key in CheckboxName]: boolean
 }
 
 export const StatementReport = () => {
   const initialCheckbox = {
-    [CheckboxEnum.Tudo]: true,
-    [CheckboxEnum.Entrada]: false,
-    [CheckboxEnum.Saida]: false,
-    [CheckboxEnum.Futuro]: false
+    [CheckboxName.Tudo]: true,
+    [CheckboxName.Entrada]: false,
+    [CheckboxName.Saida]: false,
+    [CheckboxName.Futuro]: false
   }
 
   const [transactions, setTransactions] = useState<DayTransactions[]>()
@@ -24,15 +20,15 @@ export const StatementReport = () => {
   const [input, setInput] = useState<string>('')
 
   const currentFilter = Object.keys(checkbox).filter(
-    (key) => checkbox[key as CheckboxEnum]
-  ) as CheckboxEnum[]
+    (key) => checkbox[key as CheckboxName]
+  ) as CheckboxName[]
 
-  const handleEntry = (entry: Entry, filter: CheckboxEnum) => {
+  const handleEntry = (entry: Entry, filter: CheckboxName) => {
     const entryDictionary = {
-      [CheckboxEnum.Tudo]: true,
-      [CheckboxEnum.Entrada]: entry === Entry.Credit,
-      [CheckboxEnum.Saida]: entry === Entry.Debit,
-      [CheckboxEnum.Futuro]: false
+      [CheckboxName.Tudo]: true,
+      [CheckboxName.Entrada]: entry === Entry.Credit,
+      [CheckboxName.Saida]: entry === Entry.Debit,
+      [CheckboxName.Futuro]: false
     }
 
     return entryDictionary[filter]
@@ -40,10 +36,10 @@ export const StatementReport = () => {
 
   const handleTransactionEntryFilter = (transactions: DayTransactions[]) => {
     const isFuturoActivated = currentFilter.some(
-      (filter) => filter === CheckboxEnum.Futuro
+      (filter) => filter === CheckboxName.Futuro
     )
     const isTudoActivated = currentFilter.some(
-      (filter) => filter === CheckboxEnum.Tudo
+      (filter) => filter === CheckboxName.Tudo
     )
 
     if (isTudoActivated) {
@@ -78,20 +74,20 @@ export const StatementReport = () => {
     const { entrada, futuro, saida } = currentCheckboxValue
 
     const isAllChecked = entrada && futuro && saida
-    const tudoIsSelected = name === CheckboxEnum.Tudo && checked
+    const tudoIsSelected = name === CheckboxName.Tudo && checked
 
     if (tudoIsSelected || isAllChecked) {
       const newCheckboxValue = {
-        [CheckboxEnum.Tudo]: true,
-        [CheckboxEnum.Entrada]: false,
-        [CheckboxEnum.Futuro]: false,
-        [CheckboxEnum.Saida]: false
+        [CheckboxName.Tudo]: true,
+        [CheckboxName.Entrada]: false,
+        [CheckboxName.Futuro]: false,
+        [CheckboxName.Saida]: false
       }
       setCheckbox(newCheckboxValue)
     } else {
       setCheckbox({
         ...currentCheckboxValue,
-        [CheckboxEnum.Tudo]: false
+        [CheckboxName.Tudo]: false
       })
     }
   }

@@ -5,6 +5,7 @@ export const theme = {
       secondary: '#1A93DA'
     },
     grays: {
+      0: '#FFFFFF',
       1: '#3B3B3B',
       2: '#6B7076',
       3: '#C7CBCF',

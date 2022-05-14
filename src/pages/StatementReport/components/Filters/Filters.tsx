@@ -1,8 +1,10 @@
 import { ChangeEvent } from 'react'
 import { Checkbox as CheckboxType } from '../../StatementReport'
-import { Input } from '../Input'
+import { Checkbox } from '../Checkbox'
+import { SearchInput } from '../SearchInput'
+import { CheckboxContainer, FiltersContainer } from './Filters.styles'
 
-export enum Checkbox {
+export enum CheckboxName {
   Tudo = 'tudo',
   Entrada = 'entrada',
   Saida = 'saida',
@@ -23,55 +25,43 @@ export const Filters = ({
   handleInputChange
 }: FiltersProps) => {
   return (
-    <div>
-      <div>
-        <label htmlFor="tudo">
-          Tudo
-          <input
-            type="checkbox"
-            name={Checkbox.Tudo}
-            id={Checkbox.Tudo}
-            checked={checkbox.tudo}
-            onChange={handleCheckboxChange}
-          />
-        </label>
-        <label htmlFor="entrada">
-          Entrada
-          <input
-            type="checkbox"
-            name={Checkbox.Entrada}
-            id={Checkbox.Entrada}
-            checked={checkbox.entrada}
-            onChange={handleCheckboxChange}
-          />
-        </label>
-        <label htmlFor="saida">
-          Saída
-          <input
-            type="checkbox"
-            name={Checkbox.Saida}
-            id={Checkbox.Saida}
-            checked={checkbox.saida}
-            onChange={handleCheckboxChange}
-          />
-        </label>
-        <label htmlFor="futuro">
-          Futuro
-          <input
-            type="checkbox"
-            name={Checkbox.Futuro}
-            id={Checkbox.Futuro}
-            checked={checkbox.futuro}
-            onChange={handleCheckboxChange}
-          />
-        </label>
-      </div>
-      <Input
+    <FiltersContainer>
+      <CheckboxContainer>
+        <Checkbox
+          text="Tudo"
+          name={CheckboxName.Tudo}
+          id={CheckboxName.Tudo}
+          checked={checkbox.tudo}
+          onChange={handleCheckboxChange}
+        />
+        <Checkbox
+          text="Entrada"
+          name={CheckboxName.Entrada}
+          id={CheckboxName.Entrada}
+          checked={checkbox.entrada}
+          onChange={handleCheckboxChange}
+        />
+        <Checkbox
+          text="Saída"
+          name={CheckboxName.Saida}
+          id={CheckboxName.Saida}
+          checked={checkbox.saida}
+          onChange={handleCheckboxChange}
+        />
+        <Checkbox
+          text="Futuro"
+          name={CheckboxName.Futuro}
+          id={CheckboxName.Futuro}
+          checked={checkbox.futuro}
+          onChange={handleCheckboxChange}
+        />
+      </CheckboxContainer>
+      <SearchInput
         type="text"
         placeholder="Pesquisar"
         onChange={handleInputChange}
         value={input}
       />
-    </div>
+    </FiltersContainer>
   )
 }
