@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react'
 import { Checkbox as CheckboxType } from '../../StatementReport'
+import { Input } from '../Input'
 
 export enum Checkbox {
   Tudo = 'tudo',
@@ -11,7 +12,7 @@ export enum Checkbox {
 type FiltersProps = {
   checkbox: CheckboxType
   handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>) => void
-  input: string | undefined
+  input: string
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -65,7 +66,7 @@ export const Filters = ({
           />
         </label>
       </div>
-      <input
+      <Input
         type="text"
         placeholder="Pesquisar"
         onChange={handleInputChange}

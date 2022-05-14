@@ -21,7 +21,7 @@ export const StatementReport = () => {
 
   const [transactions, setTransactions] = useState<DayTransactions[]>()
   const [checkbox, setCheckbox] = useState<Checkbox>(initialCheckbox)
-  const [input, setInput] = useState<string>()
+  const [input, setInput] = useState<string>('')
 
   const currentFilter = Object.keys(checkbox).filter(
     (key) => checkbox[key as CheckboxEnum]
