@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-extra-semi */
-import { screen, render, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { StatementReport } from './StatementReport'
 
 import { getTransactions } from '../../services'
 import { MOCK_DATA_FETCH } from './mock'
+import { renderWithTheme } from '../../utils/testUtils'
 
 jest.mock('../../services', () => ({
   getTransactions: jest.fn()
@@ -18,7 +19,7 @@ beforeEach(() => {
 describe('StatementReport', () => {
   describe('checkboxes filter', () => {
     it('should unselect another checkboxes when select `Tudo`', () => {
-      render(<StatementReport />)
+      renderWithTheme(<StatementReport />)
 
       const tudoCheckbox = screen.getByLabelText<HTMLInputElement>(/tudo/i)
       const entradaCheckbox =
@@ -31,7 +32,7 @@ describe('StatementReport', () => {
       expect(entradaCheckbox.checked).toBe(false)
     })
     it('should unselect all checkboxes and select `Tudo` when selecting each one', () => {
-      render(<StatementReport />)
+      renderWithTheme(<StatementReport />)
 
       const tudoCheckbox = screen.getByLabelText<HTMLInputElement>(/tudo/i)
       const entradaCheckbox =
@@ -52,7 +53,7 @@ describe('StatementReport', () => {
   describe('list filtering', () => {
     describe('checkboxes', () => {
       it('should render just `CREDIT` entry when only `Entrada` is selected', async () => {
-        render(<StatementReport />)
+        renderWithTheme(<StatementReport />)
 
         fireEvent.click(screen.getByLabelText<HTMLInputElement>(/entrada/i))
 
@@ -62,7 +63,7 @@ describe('StatementReport', () => {
         })
       })
       it('should render just `DEBIT` entry when only `Saída` is selected', async () => {
-        render(<StatementReport />)
+        renderWithTheme(<StatementReport />)
 
         fireEvent.click(screen.getByLabelText<HTMLInputElement>(/saída/i))
 
@@ -72,14 +73,14 @@ describe('StatementReport', () => {
         })
       })
       it('should render scheduled transaction entry when `Futuro` is selected', async () => {
-        render(<StatementReport />)
+        renderWithTheme(<StatementReport />)
 
         fireEvent.click(screen.getByLabelText<HTMLInputElement>(/futuro/i))
 
         expect(await screen.findByText(/scheduled/i)).toBeInTheDocument()
       })
       it('should render all transactions when `Tudo` is selected', async () => {
-        render(<StatementReport />)
+        renderWithTheme(<StatementReport />)
 
         expect(await screen.findByText(/scheduled/i)).toBeInTheDocument()
         expect(await screen.findByText(/entry debit/i)).toBeInTheDocument()
@@ -88,7 +89,7 @@ describe('StatementReport', () => {
     })
     describe('input', () => {
       it('should filter by actor name', async () => {
-        render(<StatementReport />)
+        renderWithTheme(<StatementReport />)
 
         const input = screen.getByPlaceholderText(/pesquisar/i)
 

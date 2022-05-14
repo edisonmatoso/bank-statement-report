@@ -1,7 +1,8 @@
 import { Transaction as TransactionType } from '../../../../../../services/types'
-import { resolveTransactionType } from '../../../../utils'
+import { formatToBRL, resolveTransactionType } from '../../../../../../utils'
 import {
   ActorField,
+  Amount,
   AmountField,
   Container,
   DatetimeField,
@@ -25,7 +26,9 @@ export const Transaction = ({ transaction }: TransactionProps) => {
         <p>{transaction.dateEvent}</p>
       </DatetimeField>
       <AmountField>
-        <p>{transaction.amount}</p>
+        <Amount transaction={transaction}>
+          R$ <span>{formatToBRL(transaction.amount)}</span>
+        </Amount>
       </AmountField>
     </Container>
   )

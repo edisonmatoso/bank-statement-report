@@ -1,5 +1,8 @@
-import { render, screen } from '@testing-library/react'
+import { useTheme } from '@emotion/react'
+import { screen } from '@testing-library/react'
 import { Transaction as TransactionType } from '../../../../../../services/types'
+import { theme } from '../../../../../../theme'
+import { renderWithTheme } from '../../../../../../utils/testUtils'
 import {
   CompletedPaymentCreditTransaction,
   CompletedPaymentDebitTransaction,
@@ -13,7 +16,7 @@ import {
 import { Transaction } from './Transaction'
 
 const setup = (transaction: TransactionType) =>
-  render(<Transaction transaction={transaction} />)
+  renderWithTheme(<Transaction transaction={transaction} />)
 
 describe('Transaction component', () => {
   describe('when status', () => {
@@ -25,12 +28,28 @@ describe('Transaction component', () => {
 
             expect(screen.getByText(/pagamento realizado/i)).toBeInTheDocument()
           })
+
+          it('transaction amount should render with primary color', () => {
+            setup(CompletedPaymentDebitTransaction)
+            const primaryColor = theme.color.main.primary
+
+            expect(screen.getByText('R$')).toHaveStyle(`color: ${primaryColor}`)
+          })
         })
         describe('with `CREDIT` entry', () => {
           it('should have `Pagamento Recebido` label', () => {
             setup(CompletedPaymentCreditTransaction)
 
             expect(screen.getByText(/pagamento recebido/i)).toBeInTheDocument()
+          })
+
+          it('transaction amount should render with secondary color', () => {
+            setup(CompletedPaymentCreditTransaction)
+            const secondaryColor = theme.color.main.secondary
+
+            expect(screen.getByText('R$')).toHaveStyle(
+              `color: ${secondaryColor}`
+            )
           })
         })
       })
@@ -75,6 +94,14 @@ describe('Transaction component', () => {
             ).toBeInTheDocument()
           })
         })
+      })
+
+      it('transaction amount should render with line through', () => {
+        setup(RefundedTransferCreditTransaction)
+
+        expect(screen.getByText('R$')).toHaveStyle(
+          'text-decoration: line-through'
+        )
       })
     })
     describe('is equal `PENDING`', () => {

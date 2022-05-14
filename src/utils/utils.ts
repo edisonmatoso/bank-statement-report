@@ -1,4 +1,4 @@
-import { Entry, Source, Status, Transaction } from '../../services/types'
+import { Entry, Source, Status, Transaction } from '../services/types'
 
 export const resolveTransactionType = ({
   status,
@@ -29,5 +29,5 @@ export const resolveTransactionType = ({
 
 export const formatToBRL = (value: number | string): string => {
   const number = Number(value).toFixed(2).replace('.', ',')
-  return 'R$ ' + number.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+  return number.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 }
