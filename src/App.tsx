@@ -1,11 +1,14 @@
 import './App.css'
+import { Container, Divider, Header } from './App.styles'
 import { StatementReport } from './pages/StatementReport'
 
 function App() {
   return (
-    <div className="App">
+    <Container>
+      <Header>Extrato</Header>
+      <Divider />
       <StatementReport />
-    </div>
+    </Container>
   )
 }
 

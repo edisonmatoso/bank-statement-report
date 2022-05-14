@@ -4,7 +4,7 @@ export const SearchInputContainer = styled.div`
   display: flex;
   align-items: center;
   height: 35px;
-  background-color: ${({ theme }) => theme.color.grays[4]};
+  background-color: ${({ theme }) => theme.color.grays[5]};
   border-radius: ${({ theme }) => theme.radius[1]};
   padding: 10px;
 `

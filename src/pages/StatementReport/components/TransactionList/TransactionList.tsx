@@ -7,13 +7,13 @@ type TransactionListProps = {
 
 export const TransactionList = ({ transactions }: TransactionListProps) => {
   return (
-    <div>
+    <>
       {transactions?.map((dateTransaction) => (
         <DayTransactions
           key={dateTransaction.date}
           dayTransactions={dateTransaction}
         />
       ))}
-    </div>
+    </>
   )
 }

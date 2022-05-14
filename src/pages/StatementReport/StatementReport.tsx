@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { getTransactions } from '../../services'
 import { DayTransactions, Entry } from '../../services/types'
 import { CheckboxName, Filters, TransactionList } from './components'
+import { Container } from './StatementReport.styles'
 
 export type Checkbox = {
   [key in CheckboxName]: boolean
@@ -113,7 +114,7 @@ export const StatementReport = () => {
   }, [])
 
   return (
-    <div>
+    <Container>
       <Filters
         checkbox={checkbox}
         handleCheckboxChange={handleCheckboxChange}
@@ -121,6 +122,6 @@ export const StatementReport = () => {
         handleInputChange={({ currentTarget: { value } }) => setInput(value)}
       />
       <TransactionList transactions={filteredTransactions} />
-    </div>
+    </Container>
   )
 }

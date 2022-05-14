@@ -7,7 +7,7 @@ interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export const Checkbox = ({ name, text, checked, ...rest }: CheckboxProps) => {
   return (
     <Label htmlFor={name} checked={Boolean(checked)}>
-      {text}
+      <span>{text}</span>
       <Input type="checkbox" name={name} checked={checked} {...rest} />
     </Label>
   )

@@ -1,5 +1,6 @@
-import { DayTransactions as DayTransactionsType } from '../../../../../services/types'
-import { Transaction } from './Transaction'
+import { DayTransactions as DayTransactionsType } from '../../../../../../services/types'
+import { Transaction } from '../Transaction'
+import { Container } from './DayTransactions.styles'
 
 type DayTransactionsProps = {
   dayTransactions: DayTransactionsType
@@ -7,7 +8,7 @@ type DayTransactionsProps = {
 
 export const DayTransactions = ({ dayTransactions }: DayTransactionsProps) => {
   return (
-    <div key={dayTransactions.date} style={{ padding: 5 }}>
+    <Container key={dayTransactions.date}>
       <p>{`${dayTransactions.date} - ${dayTransactions.amountTotal}`}</p>
       {dayTransactions.items.map((transaction) => (
         <Transaction
@@ -15,6 +16,6 @@ export const DayTransactions = ({ dayTransactions }: DayTransactionsProps) => {
           transaction={transaction}
         />
       ))}
-    </div>
+    </Container>
   )
 }
