@@ -12,7 +12,7 @@ export const DayTransactions = ({
   return (
     <Container>
       <Date>{date}</Date>
-      <p>{amountTotal}</p>
+      <span>{amountTotal}</span>
       {items.map((transaction) => (
         <Transaction
           key={`${transaction.actor}${transaction.dateEvent}`}

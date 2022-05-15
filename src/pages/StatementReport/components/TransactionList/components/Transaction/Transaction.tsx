@@ -1,5 +1,9 @@
 import { Transaction as TransactionType } from '../../../../../../services/types'
-import { formatToBRL, resolveTransactionType } from '../../../../../../utils'
+import {
+  formatMonth,
+  formatToBRL,
+  resolveTransactionType
+} from '../../../../../../utils'
 import {
   ActorField,
   Amount,
@@ -14,6 +18,19 @@ type TransactionProps = {
 }
 
 export const Transaction = ({ transaction }: TransactionProps) => {
+  const handleDate = () => {
+    const date = new Date(transaction.dateEvent)
+    const isToday = date.getDate() === new Date().getDate()
+    const formattedMinutes = date.getMinutes() === 0 ? `00` : date.getMinutes()
+
+    const formattedDate = `${date.getDate()} ${formatMonth(
+      date.getMonth()
+    )} ${date.getFullYear()} - ${date.getHours()}:${formattedMinutes}`
+
+    return isToday ? `Hoje - ${formattedDate}` : formattedDate
+  }
+
+  const date = handleDate()
   return (
     <Container>
       <ActorField>
@@ -23,7 +40,7 @@ export const Transaction = ({ transaction }: TransactionProps) => {
         <p>{resolveTransactionType(transaction)}</p>
       </TransactionTypeField>
       <DatetimeField>
-        <p>{transaction.dateEvent}</p>
+        <p>{date}</p>
       </DatetimeField>
       <AmountField>
         <Amount transaction={transaction}>

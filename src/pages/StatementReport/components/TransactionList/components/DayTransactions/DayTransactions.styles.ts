@@ -17,7 +17,7 @@ export const Container = styled.div`
   }
 `
 
-export const Date = styled.p`
+export const Date = styled.span`
   color: ${({ theme }) => theme.color.grays[1]};
   font-weight: 700;
   font-size: 12px;
