@@ -21,9 +21,10 @@ export const Transaction = ({ transaction }: TransactionProps) => {
   const handleDate = () => {
     const date = new Date(transaction.dateEvent)
     const isToday = date.getDate() === new Date().getDate()
+
     const formattedMinutes = date.getMinutes() === 0 ? `00` : date.getMinutes()
 
-    const formattedDate = `${date.getDate()} ${formatMonth(
+    const formattedDate = `${date.getDate() + 1} ${formatMonth(
       date.getMonth()
     )} ${date.getFullYear()} - ${date.getHours()}:${formattedMinutes}`
 

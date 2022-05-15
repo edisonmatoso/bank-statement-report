@@ -32,20 +32,59 @@ export const formatToBRL = (value: number | string): string => {
   return number.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 }
 
-export const formatMonth = (monthNumber: number) => {
+export const formatMonth = (monthNumber: number, full = false) => {
   const monthDictionary = {
-    0: 'Jan',
-    1: 'Fev',
-    2: 'Mar',
-    3: 'Abr',
-    4: 'Mai',
-    5: 'Jun',
-    6: 'Jul',
-    7: 'Ago',
-    8: 'Set',
-    9: 'Out',
-    10: 'Nov',
-    11: 'Dez'
+    0: {
+      abbreviated: 'Jan',
+      full: 'Janeiro'
+    },
+    1: {
+      abbreviated: 'Fev',
+      full: 'Fevereiro'
+    },
+    2: {
+      abbreviated: 'Mar',
+      full: 'Março'
+    },
+    3: {
+      abbreviated: 'Abr',
+      full: 'Abril'
+    },
+    4: {
+      abbreviated: 'Mai',
+      full: 'Maio'
+    },
+    5: {
+      abbreviated: 'Jun',
+      full: 'Junho'
+    },
+    6: {
+      abbreviated: 'Jul',
+      full: 'Julho'
+    },
+    7: {
+      abbreviated: 'Ago',
+      full: 'Agosto'
+    },
+    8: {
+      abbreviated: 'Set',
+      full: 'Setembro'
+    },
+    9: {
+      abbreviated: 'Out',
+      full: 'Outubro'
+    },
+    10: {
+      abbreviated: 'Nov',
+      full: 'Novembro'
+    },
+    11: {
+      abbreviated: 'Dez',
+      full: 'Dezembro'
+    }
   }
-  return monthDictionary[monthNumber as keyof typeof monthDictionary]
+
+  const value = monthDictionary[monthNumber as keyof typeof monthDictionary]
+
+  return full ? value.full : value.abbreviated
 }

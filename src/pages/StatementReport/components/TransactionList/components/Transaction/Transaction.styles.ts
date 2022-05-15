@@ -15,7 +15,9 @@ export const Container = styled.div`
 
 export const ActorField = styled.div``
 export const TransactionTypeField = styled.div``
-export const DatetimeField = styled.div``
+export const DatetimeField = styled.div`
+  margin-left: 10px;
+`
 export const AmountField = styled.div`
   & > p {
     text-align: end;
