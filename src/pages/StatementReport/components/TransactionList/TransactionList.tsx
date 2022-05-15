@@ -1,12 +1,20 @@
 import { DayTransactions as DayTransactionsType } from '../../../../services/types'
 import { DayTransactions } from './components'
-import { HeaderList, Item, ListContainer } from './TransactionList.styles'
+import {
+  EmptyMessage,
+  HeaderList,
+  Item,
+  ListContainer
+} from './TransactionList.styles'
 
 type TransactionListProps = {
   transactions: DayTransactionsType[] | undefined
 }
 
 export const TransactionList = ({ transactions }: TransactionListProps) => {
+  if (!transactions?.length) {
+    return <EmptyMessage>Não há transações para o seu filtro</EmptyMessage>
+  }
   return (
     <div>
       <HeaderList>

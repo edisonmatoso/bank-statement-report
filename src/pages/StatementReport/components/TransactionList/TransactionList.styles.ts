@@ -38,3 +38,7 @@ export const Item = styled.span<ItemProps>`
       `
   }}
 `
+
+export const EmptyMessage = styled.h3`
+  text-align: center;
+`
