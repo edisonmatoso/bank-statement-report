@@ -13,7 +13,14 @@ export const Container = styled.div`
   }
 `
 
-export const ActorField = styled.div``
+export const ActorField = styled.div`
+  display: flex;
+  align-items: center;
+
+  & :first-of-type {
+    margin-right: 5px;
+  }
+`
 export const TransactionTypeField = styled.div``
 export const DatetimeField = styled.div`
   margin-left: 10px;

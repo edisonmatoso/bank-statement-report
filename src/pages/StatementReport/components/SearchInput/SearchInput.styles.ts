@@ -7,6 +7,10 @@ export const SearchInputContainer = styled.div`
   background-color: ${({ theme }) => theme.color.grays[5]};
   border-radius: ${({ theme }) => theme.radius[1]};
   padding: 10px;
+
+  & :first-of-type {
+    padding: 0 5px;
+  }
 `
 
 export const SearchInput = styled.input`

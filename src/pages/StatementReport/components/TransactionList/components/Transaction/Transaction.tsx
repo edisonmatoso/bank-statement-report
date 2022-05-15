@@ -4,6 +4,7 @@ import {
   formatToBRL,
   resolveTransactionType
 } from '../../../../../../utils'
+import { TransactionIcon } from '../../../TransactionIcon'
 import {
   ActorField,
   Amount,
@@ -35,7 +36,8 @@ export const Transaction = ({ transaction }: TransactionProps) => {
   return (
     <Container>
       <ActorField>
-        <p>{`${transaction.entry} ${transaction.actor}`}</p>
+        <TransactionIcon transaction={transaction} />
+        <p>{transaction.actor}</p>
       </ActorField>
       <TransactionTypeField>
         <p>{resolveTransactionType(transaction)}</p>

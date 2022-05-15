@@ -1,3 +1,4 @@
+import { SearchIcon } from '../../../../icons'
 import {
   SearchInputContainer,
   SearchInput as StyledSearchInput
@@ -8,7 +9,7 @@ export const SearchInput = (
 ) => {
   return (
     <SearchInputContainer>
-      <div style={{ margin: 15 }}>x</div>
+      <SearchIcon />
       <StyledSearchInput {...props} />
     </SearchInputContainer>
   )
